@@ -20,6 +20,9 @@ lspconfig.tsserver.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
+  cmd = { "typescript-language-server", "--stdio" },
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+  root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
 }
 
 -- clangd
@@ -39,5 +42,43 @@ lspconfig.clangd.setup {
     '.git'
   ),
   single_file_support = true,
+}
+
+-- c#
+lspconfig.omnisharp.setup {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+  filetypes = { "cs", "vb" },
+  root_dir = lspconfig.util.root_pattern("*.csproj", "*.sln"),
+}
+
+-- python
+lspconfig.pyright.setup {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  cmd = { "pyright-langserver", "--stdio" },
+  filetypes = { "python" },
+  root_dir = function(fname)
+    return lspconfig.util.root_pattern(
+      'pyproject.toml',
+      'setup.py',
+      'setup.cfg',
+      'requirements.txt',
+      'Pipfile',
+      '.git'
+    )(fname) or lspconfig.util.path.dirname(fname)
+  end,
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = "workspace",
+        useLibraryCodeForTypes = true,
+      },
+    },
+  },
 }
 
