@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    -- event = 'BufWritePre' -- uncomment for format on save
+    event = "BufWritePre", -- Ensure format on save is triggered
     config = function()
       require "configs.conform"
     end,
@@ -16,23 +16,18 @@ return {
   },
 
   {
-  	"williamboman/mason.nvim",
-  	opts = {
-  		ensure_installed = {
-  			"lua-language-server", "stylua",
-  			"html-lsp", "css-lsp" , "prettier", "clangd",
-        "glslls", "glsl_analyzer",
-  		},
-  	},
+    "editorconfig/editorconfig-vim",
+    event = "BufReadPre",
   },
-  --
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "lua-language-server", "stylua",
+        "html-lsp", "css-lsp", "prettier", "clangd", "clang-format", "black",
+        "glslls", "glsl_analyzer",
+      },
+    },
+  },
 }

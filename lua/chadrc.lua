@@ -2,7 +2,7 @@
 local M = {}
 
 M.ui = {
-  theme = "gatekeeper",
+  theme = "chadracula",
 
   hl_override = {
       Pmenu = { bg = "white" },

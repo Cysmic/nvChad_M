@@ -36,3 +36,12 @@ require "nvchad.autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Define a function to format the file
+function FormatFile()
+  require('conform').format({ async = false, timeout_ms = 1000 })
+end
+
+-- Create a custom command to call the function
+vim.api.nvim_create_user_command('FF', FormatFile, {})
+

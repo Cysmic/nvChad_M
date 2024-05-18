@@ -55,11 +55,11 @@ lspconfig.omnisharp.setup {
 }
 
 -- python
-lspconfig.pyright.setup {
+lspconfig.pylsp.setup{
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
-  cmd = { "pyright-langserver", "--stdio" },
+  cmd = { "pylsp" },
   filetypes = { "python" },
   root_dir = function(fname)
     return lspconfig.util.root_pattern(
@@ -72,13 +72,22 @@ lspconfig.pyright.setup {
     )(fname) or lspconfig.util.path.dirname(fname)
   end,
   settings = {
-    python = {
-      analysis = {
-        autoSearchPaths = true,
-        diagnosticMode = "workspace",
-        useLibraryCodeForTypes = true,
+    pylsp = {
+      plugins = {
+        pylsp_mypy = {
+          enabled = true,
+        },
+        pylsp_black = {
+          enabled = true,
+        },
+        pylsp_isort = {
+          enabled = true,
+        },
+        pylint = {
+          enabled = true,
+          args = {"--disable=C0111"} -- Example argument to disable a specific pylint warning
+        },
       },
     },
   },
 }
-
