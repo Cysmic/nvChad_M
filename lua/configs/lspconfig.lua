@@ -25,6 +25,35 @@ lspconfig.tsserver.setup {
   root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
 }
 
+-- Register custom GLSL analyzer
+if not lspconfig.glsl_analyzer then
+  lspconfig.configs.glsl_analyzer = {
+    default_config = {
+      cmd = { "glsl_analyzer" },
+      filetypes = { "glsl", "vert", "tesc", "tese", "geom", "frag", "comp" },
+      root_dir = lspconfig.util.root_pattern(".git", "*.glsl"),
+      settings = {},
+    },
+  }
+end
+
+-- Setup GLSL analyzer
+lspconfig.glsl_analyzer.setup {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+}
+
+-- CMake Language Server
+lspconfig.cmake.setup {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  cmd = { "cmake-language-server" },
+  filetypes = { "cmake" },
+  root_dir = lspconfig.util.root_pattern(".git", "CMakeLists.txt"),
+}
+
 -- lua
 lspconfig.lua_ls.setup {
   on_attach = on_attach,
