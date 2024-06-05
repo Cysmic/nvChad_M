@@ -25,6 +25,16 @@ lspconfig.tsserver.setup {
   root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
 }
 
+-- lua
+lspconfig.lua_ls.setup {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  cmd = { "lua-language-server" },
+  filetypes = { "lua" },
+  root_dir = lspconfig.util.root_pattern(".git", "*.lua"),
+}
+
 -- clangd
 lspconfig.clangd.setup {
   on_attach = on_attach,
